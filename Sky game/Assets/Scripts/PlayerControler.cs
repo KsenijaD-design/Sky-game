@@ -8,6 +8,10 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private float RotationSpeed, moveSpeed;
     [SerializeField] private bool isGrounded = true;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Vector3 pushBackForce;
+    [SerializeField] private bool disabled = false;
+    [SerializeField] private float disableTime = 0.5f;
+    private float lastDisableTime;
     private Rigidbody rb;
     
         
@@ -18,12 +22,28 @@ public class PlayerControler : MonoBehaviour
         move = InputSystem.actions.FindAction("Player/Move");
     }
 
+    private void OnEnable()
+    {
+        obstacle.OnPlayerHit += TakeDamage;
+    }
+
+    void TakeDamage()
+    {
+        disabled = true;
+        lastDisableTime = Time.realtimeSinceStartup;
+        rb.AddForce(pushBackForce);
+        Debug.Log("Tajo damage");
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
         isGrounded = Physics.Linecast(transform.position, transform.position - transform.up * 2, groundLayer);
-        Debug.DrawRay(transform.position, transform.position - transform.up * 2);
-        if (isGrounded)
+        if (Time.timeSinceLevelLoad > lastDisableTime + disableTime)
+        {
+            disabled = false;
+        }
+        if (isGrounded && !disabled)
         {
             Vector2 moveVector = move.ReadValue<Vector2>();
             float slopeAngle = Mathf.Abs(transform.localEulerAngles.y - 180);
