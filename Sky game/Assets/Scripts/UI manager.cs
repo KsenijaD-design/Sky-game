@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UImanager : MonoBehaviour
 {
@@ -11,18 +12,44 @@ public class UImanager : MonoBehaviour
     [SerializeField] private float fadeSpeed = 0.5f;
     [SerializeField] private GameObject endPanel;
     [SerializeField] private int nextLevelIndex;
+    [SerializeField] private GameObject Leaderboardpanel;
+    [SerializeField] private TMP_Text[] leaderboarddati;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         endPanel.SetActive(false);
+        Leaderboardpanel.SetActive(false);
         overlay.gameObject.SetActive(true);
         StartCoroutine(FadeOutOverlay());
-        
     }
 
     private void finish()
     {
+        Leaderboardpanel.SetActive(true);
+        UpdateLeaderboardUI();
         endPanel.SetActive(true);
+    }
+    private void UpdateLeaderboardUI()
+    {
+        
+        var bestTimes = game_dati.Instance.bestTimes;
+
+        for (int i = 0; i < leaderboarddati.Length; i++)
+        {
+            if (i < bestTimes.Count)
+            {
+                if (bestTimes[i] >= 999.99f)
+                {
+                    leaderboarddati[i].text = $"{i + 1}. --:--";
+                }
+                else
+                {
+                    TimeSpan ts = TimeSpan.FromSeconds(bestTimes[i]);
+                    leaderboarddati[i].text = $"{i + 1}. {ts:mm\\:ss}";
+                }
+            }
+        }
     }
 
     private void OnEnable()
@@ -51,6 +78,7 @@ public class UImanager : MonoBehaviour
             yield return null;
         }
     }
+    
 
     public void Retry()
     {

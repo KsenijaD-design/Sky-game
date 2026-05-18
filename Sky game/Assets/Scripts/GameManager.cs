@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
         long bestTimeInt = PlayerPrefs.GetInt(bestTimeKey, int.MaxValue);
         bestTime = new TimeSpan (bestTimeInt);
         bestTimetext.text = "Best Time " + bestTime.ToString ("mm\\:ss");
-        
     }
     void StartRace()
     {
@@ -64,7 +63,6 @@ public class GameManager : MonoBehaviour
         {
             raceTime = DateTime.Now - raceStart + penaltyTimes;
             Timertext.text = "Time " + raceTime.ToString("mm\\:ss");
-            
         }
         
     }

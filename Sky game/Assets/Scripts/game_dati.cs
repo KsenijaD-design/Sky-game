@@ -1,12 +1,15 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class game_dati : MonoBehaviour
 {
     public List <float> bestTimes = new List <float> ();
     private static game_dati instance;
     [SerializeField] private string leaderboardKey = "Leaderboard-1";
-
+    
+    
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -20,7 +23,7 @@ public class game_dati : MonoBehaviour
         }
         LoadLeaderboard();
     }
-
+    
     private void LoadLeaderboard()
     {
         for (int i = 0; i < 5; i++)
