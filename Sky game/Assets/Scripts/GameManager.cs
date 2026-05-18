@@ -19,6 +19,12 @@ public class GameManager : MonoBehaviour
         FinishGate.FinishRaice += EndRaice;
         karogs.Penalty += AddPenalty;
     }
+    private void OnDisable()
+    {
+        StartGate.StartRaice -= StartRace;
+        FinishGate.FinishRaice -= EndRaice;
+        karogs.Penalty -= AddPenalty;
+    }
 
     void AddPenalty()
     {
@@ -43,6 +49,7 @@ public class GameManager : MonoBehaviour
     void EndRaice()
     {
         Racing = false;
+        game_dati.Instance.AddLevelTime((float)raceTime.TotalMilliseconds/1000f);
         if (raceTime < bestTime)
         {
             bestTimetext.text = "Best Time " + raceTime.ToString ("mm\\:ss"); 
@@ -55,7 +62,7 @@ public class GameManager : MonoBehaviour
     {
         if (Racing)
         {
-            TimeSpan raceTime = DateTime.Now - raceStart + penaltyTimes;
+            raceTime = DateTime.Now - raceStart + penaltyTimes;
             Timertext.text = "Time " + raceTime.ToString("mm\\:ss");
             
         }

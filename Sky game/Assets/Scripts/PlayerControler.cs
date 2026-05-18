@@ -11,9 +11,11 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private Vector3 pushBackForce;
     [SerializeField] private bool disabled = false;
     [SerializeField] private float disableTime = 0.5f;
+    [SerializeField] private float jumpForce = 12f; 
     private float lastDisableTime;
     private Rigidbody rb;
     public static Transform playerposition;
+    private Animator anim;
         
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -21,15 +23,18 @@ public class PlayerControler : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         move = InputSystem.actions.FindAction("Player/Move");
         playerposition = transform;
+        anim = GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
         obstacle.OnPlayerHit += TakeDamage;
+       
     }
     private void OnDisable()
     {
         obstacle.OnPlayerHit -= TakeDamage;
+      
     }
 
     void TakeDamage()
@@ -56,6 +61,7 @@ public class PlayerControler : MonoBehaviour
             rb.AddForce(transform.forward * moveSpeed * speedMultiplayer * Time.fixedDeltaTime);
             transform.Rotate(0, moveVector.x * RotationSpeed * Time.fixedDeltaTime, 0);
         }
-        
+        anim.SetBool("grounded", isGrounded);
+        anim.SetFloat("playerSpeed", rb.linearVelocity.magnitude);
     }
 }
