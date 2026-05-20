@@ -10242,6 +10242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   obstaclehit: {fileID: 8300000, guid: adc46c42d2b85174d83a96624c02dbd0, type: 3}
+  slidingSound: {fileID: 8300000, guid: 82cae197f72b5de4d9758b1993ec3897, type: 3}
 --- !u!4 &1213324250
 Transform:
   m_ObjectHideFlags: 0
