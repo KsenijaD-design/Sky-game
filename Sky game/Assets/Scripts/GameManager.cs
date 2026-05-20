@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     {
         Racing = false;
         game_dati.Instance.AddLevelTime((float)raceTime.TotalMilliseconds/1000f);
+        
         if (raceTime < bestTime)
         {
             bestTimetext.text = "Best Time " + raceTime.ToString ("mm\\:ss"); 

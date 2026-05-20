@@ -29,27 +29,25 @@ public class PlayerControler : MonoBehaviour
     private void OnEnable()
     {
         obstacle.OnPlayerHit += TakeDamage;
-       
     }
     private void OnDisable()
     {
         obstacle.OnPlayerHit -= TakeDamage;
-      
     }
 
     void TakeDamage()
     {
         disabled = true;
-        lastDisableTime = Time.realtimeSinceStartup;
+        lastDisableTime = Time.time;
         rb.AddForce(pushBackForce);
         Debug.Log("Tajo damage");
     }
 
-    // Update is called once per frame
+    
     void FixedUpdate()
     {
         isGrounded = Physics.Linecast(transform.position, transform.position - transform.up * 2, groundLayer);
-        if (Time.timeSinceLevelLoad > lastDisableTime + disableTime)
+        if (Time.time > lastDisableTime + disableTime)
         {
             disabled = false;
         }
@@ -63,5 +61,19 @@ public class PlayerControler : MonoBehaviour
         }
         anim.SetBool("grounded", isGrounded);
         anim.SetFloat("playerSpeed", rb.linearVelocity.magnitude);
+        PlaySound();
+
+    }
+
+    void PlaySound()
+    {
+        if (isGrounded && !disabled)
+        {
+            AudioManager.PlaySlidingSound(true);
+        }
+        else
+        {
+            AudioManager.PlaySlidingSound(false);
+        }
     }
 }
