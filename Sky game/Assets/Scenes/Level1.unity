@@ -3415,6 +3415,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6564981167228359913, guid: 49ee210ac0510844d8da858708681a45, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6564981167228359914, guid: 49ee210ac0510844d8da858708681a45, type: 3}
       propertyPath: m_Pivot.x
       value: 0
