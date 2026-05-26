@@ -32,7 +32,11 @@ public class UImanager : MonoBehaviour
     }
     private void UpdateLeaderboardUI()
     {
-        
+        if (game_dati.Instance == null || game_dati.Instance.bestTimes == null)
+        {
+            Debug.LogWarning("game_dati.Instance == null в UpdateLeaderboardUI");
+            return;
+        }
         var bestTimes = game_dati.Instance.bestTimes;
 
         for (int i = 0; i < leaderboarddati.Length; i++)
