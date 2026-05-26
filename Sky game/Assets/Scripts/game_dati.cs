@@ -45,7 +45,7 @@ public class game_dati : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            if (i <= bestTimes.Count)
+            if (i < bestTimes.Count)
             {
                 PlayerPrefs.SetFloat(leaderboardKey + i, bestTimes[i]);
             }

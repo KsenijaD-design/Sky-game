@@ -26,9 +26,11 @@ public class UImanager : MonoBehaviour
 
     private void finish()
     {
+        
+        endPanel.SetActive(true);
         Leaderboardpanel.SetActive(true);
         UpdateLeaderboardUI();
-        endPanel.SetActive(true);
+        
     }
     private void UpdateLeaderboardUI()
     {
@@ -58,6 +60,7 @@ public class UImanager : MonoBehaviour
 
     private void OnEnable()
     {
+        Debug.Log("UImanager подписался на FinishRaice"); 
         FinishGate.FinishRaice += finish;
     }
 

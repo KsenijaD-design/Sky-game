@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private string bestTimeKey = "BestTime";
     private TimeSpan bestTime;
     
-    private void OnEnable()
+    private void Awake()
     {
         StartGate.StartRaice += StartRace;
         FinishGate.FinishRaice += EndRaice;
@@ -48,14 +48,22 @@ public class GameManager : MonoBehaviour
     void EndRaice()
     {
         Racing = false;
-        game_dati.Instance.AddLevelTime((float)raceTime.TotalMilliseconds/1000f);
-        
+        if (game_dati.Instance != null)
+        {
+            game_dati.Instance.AddLevelTime((float)raceTime.TotalMilliseconds / 1000f);
+        }
+        else
+        {
+            Debug.LogError("game_dati.Instance == null в EndRaice! (singleton ещё не проснулся)");
+        }
+
+        // обновляем лучший результат
         if (raceTime < bestTime)
         {
-            bestTimetext.text = "Best Time " + raceTime.ToString ("mm\\:ss"); 
+            bestTimetext.text = "Best Time " + raceTime.ToString("mm\\:ss");
             PlayerPrefs.SetInt(bestTimeKey, (int)raceTime.Ticks);
             PlayerPrefs.Save();
-        }
+        } 
     }
 
     void Update()
