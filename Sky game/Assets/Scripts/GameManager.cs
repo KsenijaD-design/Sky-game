@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private TimeSpan penaltyTimes;
     public delegate void TimerEvent();
     private bool Racing = false;
-    [SerializeField] private TMP_Text Timertext, bestTimetext;
+    [SerializeField] private TMP_Text Timertext;
     private string bestTimeKey = "BestTime";
     private TimeSpan bestTime;
     
@@ -34,9 +34,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        long bestTimeInt = PlayerPrefs.GetInt(bestTimeKey, int.MaxValue);
-        bestTime = new TimeSpan (bestTimeInt);
-        bestTimetext.text = "Best Time " + bestTime.ToString ("mm\\:ss");
+        
     }
     void StartRace()
     {
@@ -60,7 +58,7 @@ public class GameManager : MonoBehaviour
         // обновляем лучший результат
         if (raceTime < bestTime)
         {
-            bestTimetext.text = "Best Time " + raceTime.ToString("mm\\:ss");
+            
             PlayerPrefs.SetInt(bestTimeKey, (int)raceTime.Ticks);
             PlayerPrefs.Save();
         } 
